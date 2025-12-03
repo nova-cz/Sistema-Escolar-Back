@@ -48,9 +48,12 @@ CORS_ALLOWED_ORIGINS = [
 # Permitir orígenes adicionales desde variables de entorno (para Vercel)
 CORS_ALLOWED_ORIGINS_ENV = os.environ.get('CORS_ALLOWED_ORIGINS')
 if CORS_ALLOWED_ORIGINS_ENV:
-    origins = CORS_ALLOWED_ORIGINS_ENV.split(',')
-    for origin in origins:
-        CORS_ALLOWED_ORIGINS.append(origin.strip())
+    if CORS_ALLOWED_ORIGINS_ENV == '*':
+        CORS_ALLOW_ALL_ORIGINS = True
+    else:
+        origins = CORS_ALLOWED_ORIGINS_ENV.split(',')
+        for origin in origins:
+            CORS_ALLOWED_ORIGINS.append(origin.strip())
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'dev_sistema_escolar_api.urls'
